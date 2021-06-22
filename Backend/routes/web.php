@@ -17,14 +17,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
    $router->post('readJsonFile', 'FileController@readFromFile');
    $router->post('login', 'AuthController@login');
-   $router->post('register', 'AuthController@register');
-   $router->post('logout', 'AuthController@logout');
+   //$router->post('register', 'AuthController@register');
+   $router->post('/logout', 'AuthController@logout');
+   $router->get('/boards', 'BoardController@displayAllBoards');
+   $router->get('/board/{id}', 'BoardController@displayBoard');
+   $router->put('/board/newBoard', 'BoardController@newBoard');
+   $router->patch('/board/update/{id}', 'BoardController@updateBoard');
+   $router->delete('/board/delete/{id}', 'BoardController@deleteBoard');
    $router->group(['middleware' => 'auth'], function() use ($router){
 
-     $router->get('/boards', 'BoardController@displayAllBoards');
-     $router->get('/board/{id}', 'BoardController@displayBoard');
-     $router->put('/board/newBoard', 'BoardController@newBoard');
-     $router->patch('/board/update/{id}', 'BoardController@updateBoard');
-     $router->delete('/board/delete', 'BoardController@deleteBoard');
+
    });
 });

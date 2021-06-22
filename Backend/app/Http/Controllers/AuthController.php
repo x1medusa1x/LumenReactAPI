@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Hash;
+use Validator;
 class AuthController extends Controller
 {
     /**
@@ -17,29 +17,44 @@ class AuthController extends Controller
      */
 
 
+     // public function register(Request $request){
+     //     if ($request->has('name') && $request->has('password') && $request->has('email')) {
+     //       $user = new User;
+     //       $user->password=Hash::make($request->password);
+     //       $user->email=$request->email;
+     //       $user->name = $request->name;
+     //       if($user->save()){
+     //               Return "User registration is successful!";
+     //       } else {
+     //               Return "User registration failed!";
+     //       }
+     //     } else {
+     //           Return "Please enter full user information!";
+     //     }
+     //   }
+
+
       public function login(Request $request)
       {
-       $email = $request->email;
-       $password = $request->password;
-       if( !$token = Auth::attempt(['email' => $email, 'password' => $password])){
-         return response()->json(['message' => 'Unauthorized'], 401);
-       }
+        $valid = Validator::make($request->all(), [
+             'email' => 'required|email',
+             'password' => 'required|string|min:6',
+         ]);
+
+         if ($valid->fails()) {
+             return response()->json($valid->errors(), 422);
+         }
+
+         if (! $token = auth()->attempt($valid->validated())) {
+             return response()->json(['error' => 'Unauthorized'], 401);
+           }
        return $this->respondWithToken($token);
      }
 
-     protected function respondWithToken($token)
-     {
-         return response()->json([
-             'token' => $token,
-             'token_type' => 'bearer',
-             'expires_in' => Auth::factory()->getTTL() * 60
-         ], 200);
-     }
+
 
      public function logout(Request $request){
-       $user = Auth::user();
-       dd($user);
-       #Auth::logout();
-       //$this->jwt->invalidate($this->jwt->getToken());
+      auth()->logout();
+      return response()->json(['message'=>'Successfully logged out']);
      }
 }
