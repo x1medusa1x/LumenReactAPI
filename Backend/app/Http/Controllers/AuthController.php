@@ -36,25 +36,34 @@ class AuthController extends Controller
 
       public function login(Request $request)
       {
-        $valid = Validator::make($request->all(), [
-             'email' => 'required|email',
-             'password' => 'required|string|min:6',
-         ]);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:6|max:255',
+        ]);
 
-         if ($valid->fails()) {
-             return response()->json($valid->errors(), 422);
-         }
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'messages' => $validator->messages()
+            ], 200);
+        }
 
-         if (! $token = auth()->attempt($valid->validated())) {
-             return response()->json(['error' => 'Unauthorized'], 401);
-           }
-       return $this->respondWithToken($token);
+        if (! $token = Auth::guard('api')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
      }
 
-
+     public function user(Request $request){
+       return response()->json(Auth::guard('api')->user());
+     }
 
      public function logout(Request $request){
-      auth()->logout();
-      return response()->json(['message'=>'Successfully logged out']);
+       Auth::guard('api')->logout();
+      return response()->json([
+             'status' => 'success',
+             'message' => 'logout'
+         ], 200);
      }
 }
