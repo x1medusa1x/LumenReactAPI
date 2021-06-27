@@ -52,7 +52,7 @@ const DisplayAllBoards = () => {
               <tr>
                 <th scope="col">Board Id</th>
                 <th scope="col">Board Name</th>
-                <th scope="col">User assigned to board</th>
+                <th scope="col">Board Users</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
