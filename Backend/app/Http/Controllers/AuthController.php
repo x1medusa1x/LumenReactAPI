@@ -16,24 +16,6 @@ class AuthController extends Controller
      * @return Response
      */
 
-
-     // public function register(Request $request){
-     //     if ($request->has('name') && $request->has('password') && $request->has('email')) {
-     //       $user = new User;
-     //       $user->password=Hash::make($request->password);
-     //       $user->email=$request->email;
-     //       $user->name = $request->name;
-     //       if($user->save()){
-     //               Return "User registration is successful!";
-     //       } else {
-     //               Return "User registration failed!";
-     //       }
-     //     } else {
-     //           Return "Please enter full user information!";
-     //     }
-     //   }
-
-
       public function login(Request $request)
       {
         $validator = Validator::make($request->all(), [

@@ -1,32 +1,15 @@
-import React, {useEffect, useState} from "react";
-import axios from 'axios';
-import Nav from "./nav";
+import React, {} from "react";
+import DisplayAllBoards from "./displayallboards";
+
 const Home = () => {
-  const [state, setState] = useState({});
-  useEffect(() => {
-    axios.get('user').then(
-      res=> {
-        setState({
-          user:res.data
-        })
-      },
-      err => {
-        console.log(err);
-      }
-    )
-  }, []);
 
-    if(state.user){
-      return(
-        <Nav user = {state.user}/>
-        );
-    }else{
-      return(
-        <h2> Hello stranger !</h2>
-        );
-      }
-
-
+return(
+  <div>
+    <div>
+    <DisplayAllBoards/>
+    </div>
+  </div>
+);
 };
 
 export default Home;

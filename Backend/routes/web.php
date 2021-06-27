@@ -14,7 +14,6 @@
 */
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-
    $router->post('readJsonFile', 'FileController@readFromFile');
    $router->post('login', 'AuthController@login');
    $router->group(['middleware' => 'auth'], function() use ($router){
