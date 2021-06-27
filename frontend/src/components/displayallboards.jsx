@@ -37,7 +37,7 @@ const DisplayAllBoards = () => {
         <div className="row">
           <div className="d-flex justify-content-end">
             <Link to={"/board/new"} className="nav-link">
-              <button className="btn btn-primary">New Entry</button>
+              <button className="btn btn-success">New Entry</button>
             </Link>
             <Link to={'/'} onClick={logout} className="nav-link">
               <button className="btn btn-dark">
@@ -66,7 +66,7 @@ const DisplayAllBoards = () => {
                     <td>{board.user.name}</td>
                     <td>
                       <Link to={`/edit/board/${board.id}`}>
-                        <button className="btn btn-success">Edit</button>
+                        <button className="btn btn-warning">Edit</button>
                       </Link>
                     </td>
                     <td>
